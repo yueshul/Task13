@@ -1,14 +1,44 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <!-- <ion-navbar color="primary">
+    <! <ion-title>
+      Trip Planner
+    </ion-title> -->
+  <!-- </ion-navbar> --> 
+
+  <ion-toolbar color="white">
+
+      <ion-segment [(ngModel)]="option">
+          <ion-segment-button value="address">
+            Address
+          </ion-segment-button>
+          <ion-segment-button value="stop">
+            Stop
+          </ion-segment-button>
+          <ion-segment-button value="route">
+            Route
+          </ion-segment-button>
+      </ion-segment>
+    <!-- <ion-select [(ngModel)]="option">
+        <ion-option value="f">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select> -->
+
+  </ion-toolbar>
+
+  <ion-searchbar
+      [(ngModel)]="searchItem"
+      (ionInput)="showResults($event)"
+      (ionCancel)="cancel($event)">
+    </ion-searchbar>
+  
+
+<ion-list *ngIf='showing'>
+    <ion-item *ngFor="let item of items" (touchstart)="selectResult(item)">
+      {{ item.description }}
+    </ion-item>
+</ion-list>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <div #map id="map" padding></div>
 </ion-content>
