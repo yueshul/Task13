@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 /**
- * Generated class for the RoutePage page.
+ * Generated clabus_options for the RoutePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -23,20 +23,56 @@ export class RoutePage {
     console.log('hehe');
     console.log(navParams);
     this.routes = navParams.get('routes');
+    console.log('all routes')
+    console.log(JSON.stringify(this.routes, null, 2));
+    
     this.callback = navParams.get('callback');
-
+    
     for (let route of this.routes) {
-      route['text'] = this.generateDescription(route);
+      
+      route['text'] = this.generateDescription(route)['s'];
+      route['routenumber'] = this.generateDescription(route)['bus_options'];
+      // route['list'] = this.generateDescription(route);
+      console.log('route text');
       console.log(route);
+      
     }
   }
 
-  generateDescription(route : any) : string {
+  generateDescription(route : any) : {} {
     let leg : any = route['legs'][0];
+    let temp: any = route['legs'][0]['steps'];
+
     let s : string = '';
+    let bus_options : string = '';
+    
+    let list: string[] = []; 
+
+    for (let i of temp) {
+        if (i['travel_mode'] == 'TRANSIT') {
+              list.push(i['transit_details']['line']['short_name'])
+        }
+        
+    };
+    // bus_options = list[0];
+    for (let j of list) {
+      
+      bus_options +=  j + "->"
+    }
+
+    bus_options = bus_options.substring(0, bus_options.length - 2)
+    
+
+    // s = leg['departure_time']['text'] + '-' + leg['arrival_time']['text'] + 
+    // ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'] ;
+
     s = leg['departure_time']['text'] + '-' + leg['arrival_time']['text'] + 
-    ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'];
-    return s;
+    ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'] ;
+
+    
+    return {
+      s:s,
+      bus_options:bus_options};
   }
 
   ionViewDidLoad() {

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MapsProvider } from './../../providers/maps/maps';
 import { SelectSearchable } from 'ionic-select-searchable';
@@ -41,8 +41,9 @@ export class HomePage {
               public geolocation: Geolocation, 
               public mapsProvider: MapsProvider, 
               public httpClient : HttpClient,
-              public actionSheetCtrl: ActionSheetController) {
-      
+              public actionSheetCtrl: ActionSheetController,
+              public menuController: MenuController) {
+      menuController.enable(true);
   }
 
   ionViewDidLoad() {
@@ -124,7 +125,8 @@ export class HomePage {
                 .set("origin", this.location.latitude + ','+this.location.longitude)
                 .set("destination", "place_id:" + place_id)
                 .set("mode", "transit")
-                .set("alternatives", "true");
+                .set('alternatives',"true");
+
 
       this.httpClient.get(this.direction_api, {params : params}).subscribe( data => {
         // console.log(data);

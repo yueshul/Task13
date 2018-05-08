@@ -1,1 +1,50 @@
-<ion-nav [root]="rootPage"></ion-nav>
+
+<ion-nav #content [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+    <ion-content>
+            <!-- <button ion-button menuClose>Close Menu</button> -->
+        
+        <h3>Bookmarks</h3>
+       
+            <ion-list>
+                <!-- <button ion-item (click)="routeSelected(route)"> -->
+                 <button ion-item >
+                    <ion-icon name="home">
+                        </ion-icon> Home
+                        <p>Set up current home</p>
+                        <button ion-button clear item-end>Edit</button>
+                        
+                        <!-- <button ion-button clear item-end>Edit</button> -->
+                    </button>  
+                <button ion-item >
+                        <ion-icon name="briefcase"></ion-icon> Work
+                        <p>Set up current home</p>
+                        <button ion-button clear item-end>Edit</button>
+                        </button>  
+                
+                </ion-list>
+            <h5>Saved Addresses</h5>
+                <ion-list>
+                    <button ion-item >
+                        <ion-icon name="bookmark"></ion-icon>
+                    Apple Store ShadySide
+                    </button>
+                </ion-list> 
+           
+            <!-- <ion-list *ngFor="let route of routes"> {{routes}}</ion-list>-->
+            <h4 id="menu-heading4" style="color:#000000;">
+                    Notifications
+                  </h4>
+                  <form id="menu-form2">
+                    <button id="menu-button2" ion-button color="white" block icon-left style="border-radius:4px 4px 4px 4px;" menuClose="" on-click="goToBusAlarm()">
+                      <ion-icon name="alarm"></ion-icon>
+                      Bus Alerts
+                    </button>
+                    <button id="menu-button3" ion-button color="white" block icon-left style="border-radius:5px 5px 5px 5px;" menuClose="" on-click="goToAlertType()">
+                      <ion-icon name="barcode"></ion-icon>
+                      Alert Types
+                    </button>
+                  </form>
+  
+    </ion-content>
+</ion-menu>

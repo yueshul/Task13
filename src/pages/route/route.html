@@ -13,10 +13,35 @@
 </ion-header>
 
 <ion-content padding>
+
     <ion-list inset>
-        <button ion-item *ngFor="let route of routes" (click)="routeSelected(route)">
-          <!-- {{route.legs.arrival_time.text}} - {{route.legs.departure_time.text}} : {{ route.fare }} -->
-          {{ route.text }}
-        </button> 
+      <!-- <ion-item > -->
+        <!-- <ion-content padding> -->
+        <ion-card *ngFor="let route of routes">
+          <!-- <ion-icon name="route" item-start large></ion-icon> -->
+          <h2>{{route.routenumber}}</h2>
+          <p>{{ route.text}}</p>
+          <!-- <span item-left></span> -->
+          <!-- <span item-left>(2.6 mi)</span> -->
+          
+          <ion-item>
+              <ion-label>Alert</ion-label>
+              <ion-select interface = "popover">
+                <ion-option value="SMS">SMS</ion-option>
+                <ion-option value="Email">Email</ion-option>
+                <ion-option value="App">InApp Only</ion-option>
+                
+              </ion-select>
+            </ion-item>
+
+            <button ion-button icon-left clear item-end (click)="routeSelected(route)"> 
+                <ion-icon name="navigate"></ion-icon>
+                Start
+              </button>
+          </ion-card>
+       
       </ion-list>
-</ion-content>
+      </ion-content>        
+      
+
+

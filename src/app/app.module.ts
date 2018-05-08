@@ -15,24 +15,32 @@ import { SelectSearchableModule } from 'ionic-select-searchable';
 import { RoutePage } from '../pages/route/route';
 import { RoutePageModule } from '../pages/route/route.module';
 
+import { BusAlarmPage } from '../pages/bus-alarm/bus-alarm';
+import { AlertTypePage } from '../pages/alert-type/alert-type';
+
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    BusAlarmPage,
+    AlertTypePage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     SelectSearchableModule,
-    RoutePageModule
+    RoutePageModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    RoutePage
+    RoutePage,
+    BusAlarmPage,
+    AlertTypePage
   ],
   providers: [
     StatusBar,
