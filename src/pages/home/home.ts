@@ -9,6 +9,8 @@ import { ActionSheetController } from 'ionic-angular';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { RoutePage } from '../route/route';
 
+import {Observable} from 'rxjs/Rx';
+
 declare var google;
 
 @Component({
@@ -121,14 +123,17 @@ export class HomePage {
                 .set("key", this.API_KEY)
                 .set("origin", this.location.latitude + ','+this.location.longitude)
                 .set("destination", "place_id:" + place_id)
-                .set("mode", "transit");
+                .set("mode", "transit")
+                .set("alternatives", "true");
 
       this.httpClient.get(this.direction_api, {params : params}).subscribe( data => {
         // console.log(data);
         // console.log(JSON.stringify(data, null, 2));
+        console.log(data);
 
         let routes = data['routes'];
         console.log(routes);
+        
         this.goToRoutePage(routes);
       }
     );
@@ -144,8 +149,92 @@ export class HomePage {
           path: google.maps.geometry.encoding.decodePath(this.selectedRoute['overview_polyline']['points']),
           map: this.map
         }); 
+
+        let leg : any = this.selectedRoute['legs'][0];
+        let paac_rt : any;
+        let departure_stop : any;
+        let arrival_stop : any;
+        let direction : string;
+        for (let step of leg['steps']) {
+          if (step['travel_mode'] == 'TRANSIT') {
+            paac_rt = step['transit_details']['line']['short_name'];
+            departure_stop = step['transit_details']['departure_stop']['name'];
+            arrival_stop = step['transit_details']['arrival_stop']['name'];
+            direction = step['transit_details']['headsign'];
+            let index : number = direction.indexOf('-');
+            direction = direction.substr(0, index).toUpperCase();
+          }
+        }
+
+        console.log(paac_rt);
+        console.log(departure_stop);
+        console.log(arrival_stop);
+        console.log(direction);
+        this.getStop(paac_rt, departure_stop, arrival_stop, direction);
     });
    }
+
+  
+  stops_api = 'http://realtime.portauthority.org/bustime/api/v3/getstops';
+  prediction_api = 'http://realtime.portauthority.org/bustime/api/v3/getpredictions';
+  vehicle_api = 'http://realtime.portauthority.org/bustime/api/v3/getvehicles';
+  bus_api_key = 'WTqzZyDtJGUfQC4UZVFztNcNz';
+  
+  car_location : any;
+  car_marker  = new google.maps.Marker({
+    map : this.map,
+    icon : 'http://maps.google.com/mapfiles/ms/micons/bus.png'
+  });
+  
+  getStop(rt : string, departure_stop : string, arrival_stop : string, dir : string){
+    let params : HttpParams = new HttpParams()
+    .set("key", this.bus_api_key)
+    .set("format", 'json')
+    .set("rt", rt)
+    .set("rtpidatafeed", "Port Authority Bus")
+    .set("dir", dir);
+
+    let d_stop_id : string;
+    let a_stop_id : string;
+
+    this.httpClient.get(this.stops_api, {params : params}).subscribe( data => {
+
+      for (let stop of data['bustime-response']['stops']) {
+        if (departure_stop.localeCompare(stop['stpnm']) == 0) {
+          d_stop_id = stop['stpid'];
+        }
+        if (arrival_stop.localeCompare(stop['stpnm']) == 0) {
+          a_stop_id = stop['stpid'];
+        }
+      }
+
+      let prediction_params = new HttpParams()
+        .set('stpid', d_stop_id)
+        .set('rt',rt)
+        .set('key', this.bus_api_key)
+        .set('format', 'json')
+        .set('rtpidatafeed', 'Port Authority Bus');
+
+
+      this.httpClient.get(this.prediction_api, {params : prediction_params}).subscribe( data => {
+        console.log(data);
+        let vid = data['bustime-response']['prd'][0]['vid'];
+
+        let vehicle_params = new HttpParams()
+        .set('key', this.bus_api_key)
+        .set('format', 'json')
+        .set('rtpidatafeed', 'Port Authority Bus')
+        .set('vid', vid);
+        
+        this.car_location = Observable.interval(4000).switchMap(() => 
+          this.httpClient.get(this.vehicle_api, {params : vehicle_params}).map((data) => data['bustime-response']['vehicle'][0])
+        ).subscribe(data => {
+          this.car_marker.setMap(this.map);
+          this.car_marker.setPosition(new google.maps.LatLng(+data['lat'], +data['lon']));
+        })
+      });
+    });
+  }
    
   
   goToRoutePage(routes : any) {

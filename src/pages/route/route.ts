@@ -33,12 +33,9 @@ export class RoutePage {
 
   generateDescription(route : any) : string {
     let leg : any = route['legs'][0];
-
     let s : string = '';
-    
     s = leg['departure_time']['text'] + '-' + leg['arrival_time']['text'] + 
     ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'];
-
     return s;
   }
 
