@@ -19,6 +19,8 @@ export class RoutePage {
   route_intro : string[];
   routes : any;
   callback : any;
+  alertType : any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     console.log('hehe');
     console.log(navParams);
@@ -61,7 +63,6 @@ export class RoutePage {
     }
 
     bus_options = bus_options.substring(0, bus_options.length - 2)
-    
 
     // s = leg['departure_time']['text'] + '-' + leg['arrival_time']['text'] + 
     // ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'] ;
@@ -82,7 +83,7 @@ export class RoutePage {
 
   routeSelected(route : any) {
     console.log(route);
-    this.callback(route);
+    this.callback({route: route, alert : this.alertType});
     this.goBackToHome();
   }
 

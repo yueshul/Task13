@@ -26,7 +26,7 @@
           
           <ion-item>
               <ion-label>Alert</ion-label>
-              <ion-select interface = "popover">
+              <ion-select interface = "popover" [(ngModel)]='alertType'>
                 <ion-option value="SMS">SMS</ion-option>
                 <ion-option value="Email">Email</ion-option>
                 <ion-option value="App">InApp Only</ion-option>
