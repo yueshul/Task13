@@ -14,33 +14,50 @@
 
 <ion-content padding>
 
-    <ion-list inset>
+    <!-- <ion-list inset> -->
       <!-- <ion-item > -->
         <!-- <ion-content padding> -->
         <ion-card *ngFor="let route of routes">
           <!-- <ion-icon name="route" item-start large></ion-icon> -->
-          <h2>{{route.routenumber}}</h2>
-          <p>{{ route.text}}</p>
-          <!-- <span item-left></span> -->
-          <!-- <span item-left>(2.6 mi)</span> -->
-          
-          <ion-item>
-              <ion-label>Alert</ion-label>
-              <ion-select interface = "popover" [(ngModel)]='alertType'>
-                <ion-option value="SMS">SMS</ion-option>
-                <ion-option value="Email">Email</ion-option>
-                <ion-option value="App">InApp Only</ion-option>
-                
-              </ion-select>
-            </ion-item>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <h2 style="font-size: 20px;"><strong>{{route.bus_options}}</strong></h2>
+                <h3>{{route.direction}}</h3>
+                <div><label>Departure:</label>{{route.dep}}</div>
+                <div><label>Arrival:</label>{{route.arr}}</div>
+                <div><label>Estimated Travel Time:</label>{{route.dur}}</div>
+                <div><label>Estimated Travel Distance:</label>{{route.dis}}</div>
 
-            <button ion-button icon-left clear item-end (click)="routeSelected(route)"> 
-                <ion-icon name="navigate"></ion-icon>
-                Start
-              </button>
-          </ion-card>
+                <button ion-button icon-left clear item-end (click)="routeSelected(route)"> 
+                    <ion-icon name="navigate"></ion-icon>
+                    Start
+                  </button>
+              
+                </ion-item>
+            </ion-list>
+
+            <ion-item>
+                <ion-label>Alert</ion-label>
+                <ion-select interface = "popover" [(ngModel)]='alertType'>
+                  <ion-option value="SMS">SMS</ion-option>
+                  <ion-option value="Email">Email</ion-option>
+                  <ion-option value="App">InApp Only</ion-option>
+                  
+                </ion-select>
+              </ion-item>
+          </ion-card-content>
+          
+          <!-- <h2>{{route.routenumber}}</h2>
+          <p>{{ route.text}}</p>
+         
+          
+
+           
+          
        
-      </ion-list>
+      </ion-list> -->
+    </ion-card> 
       </ion-content>        
       
 

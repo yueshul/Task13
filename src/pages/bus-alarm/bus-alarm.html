@@ -1,17 +1,17 @@
 <ion-header>
-        <ion-navbar>
-          <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-          </button>
-          <ion-title>
-            busAlarm
-          </ion-title>
-        </ion-navbar>
+        <ion-toolbar>
+                <ion-title>Bus Alarms</ion-title>
+                <button ion-button color="light" (click)="goback()">
+                        Back
+                </button>     
+        </ion-toolbar>
+          
+       
       </ion-header>
       <ion-content padding id="page5">
-        <h1 id="busAlarm-heading1" style="color:#000000;">
+        <!-- <h1 id="busAlarm-heading1" style="color:#000000;">
           Bus Alarm
-        </h1>
+        </h1> -->
         <form id="busAlarm-form4">
           <ion-item id="busAlarm-toggle2">
             <ion-label>
@@ -19,17 +19,37 @@
             </ion-label>
             <ion-toggle color="positive" checked="false"></ion-toggle>
           </ion-item>
-          <ion-item id="busAlarm-select1">
-            <ion-label>
-              South Craig - Fifth
-            </ion-label>
-            <ion-select name=""></ion-select>
-          </ion-item>
+          <ion-item id="busAlarm-select1"> 
+                <ion-label>
+                        Select Stop
+                      </ion-label>  
+            
+            
+                <ion-select interface = "popover"> 
+                        <ion-option value="Downtown">Downtown Fifth Ave at Ross St</ion-option>
+                        <ion-option value="Oakland">Oakland Fifth Ave at Oakland Ave</ion-option>
+                        <ion-option value="North">North Oakland N Craig St at Park Plaza Apts</ion-option>
+                        <ion-option value="Shadyside">Shadyside Centre Ave at S Negley Ave</ion-option>
+                        <ion-option value="Liberty">East Liberty S Negley Ave at Penn Ave</ion-option>
+                    </ion-select>  
+                </ion-item>
+        
+            
+
+
+
+
           <ion-item id="busAlarm-select2">
             <ion-label>
               7am - 8am
             </ion-label>
-            <ion-select name=""></ion-select>
+            <ion-select interface = "popover"> 
+                    <ion-option value="Downtown">6am</ion-option>
+                    <ion-option value="Oakland">7am</ion-option>
+                    <ion-option value="North">9am</ion-option>
+                    <ion-option value="Shadyside">4pm</ion-option>
+                    <ion-option value="Liberty">5pm</ion-option>
+                </ion-select>  
           </ion-item>
           <ion-item id="busAlarm-toggle4">
             <ion-label>

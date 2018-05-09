@@ -125,6 +125,7 @@ export class HomePage {
                 .set("origin", this.location.latitude + ','+this.location.longitude)
                 .set("destination", "place_id:" + place_id)
                 .set("mode", "transit")
+
                 .set('alternatives',"true");
 
 
@@ -151,7 +152,7 @@ export class HomePage {
           path: google.maps.geometry.encoding.decodePath(this.selectedRoute['overview_polyline']['points']),
           map: this.map
         }); 
-
+        
         let leg : any = this.selectedRoute['legs'][0];
         let paac_rt : any;
         let departure_stop : any;
@@ -164,7 +165,9 @@ export class HomePage {
             arrival_stop = step['transit_details']['arrival_stop']['name'];
             direction = step['transit_details']['headsign'];
             let index : number = direction.indexOf('-');
+            
             direction = direction.substr(0, index).toUpperCase();
+            
           }
         }
 
@@ -200,7 +203,7 @@ export class HomePage {
     let a_stop_id : string;
 
     this.httpClient.get(this.stops_api, {params : params}).subscribe( data => {
-
+      console.log(data['bustime-response'])
       for (let stop of data['bustime-response']['stops']) {
         if (departure_stop.localeCompare(stop['stpnm']) == 0) {
           d_stop_id = stop['stpid'];
@@ -219,7 +222,7 @@ export class HomePage {
 
 
       this.httpClient.get(this.prediction_api, {params : prediction_params}).subscribe( data => {
-        console.log(data);
+        console.log(data['bustime-response']);
         let vid = data['bustime-response']['prd'][0]['vid'];
 
         let vehicle_params = new HttpParams()
