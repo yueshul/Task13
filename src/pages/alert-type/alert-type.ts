@@ -11,8 +11,8 @@ export class AlertTypePage {
   constructor(public navCtrl: NavController) {
   }
   goback() {
-    // this.navCtrl.pop();
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.pop();
+    // this.navCtrl.setRoot(HomePage);
 }
   
 }

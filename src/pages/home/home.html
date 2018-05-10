@@ -28,8 +28,11 @@
   <ion-searchbar
       [(ngModel)]="searchItem"
       (ionInput)="showResults($event)"
-      (ionCancel)="cancel($event)">
+      (ionCancel)="cancel($event)"> 
+      
+      
     </ion-searchbar>
+    
   
 
 <ion-list *ngIf='showing'>

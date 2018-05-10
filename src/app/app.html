@@ -21,8 +21,13 @@
                         <p>Set up current home</p>
                         <button ion-button clear item-end>Edit</button>
                         </button>  
+                            <button ion-item (click)="goToFavorite()">
+                                <ion-icon name="add-circle" item-height="5px"><span style="font: 1em sans-serif; color:gray">Add New Bookmark</span></ion-icon>
+                        </button>  
+                    </ion-list>
+
                 
-                </ion-list>
+   
             <h5>Saved Addresses</h5>
                 <ion-list>
                     <button ion-item >

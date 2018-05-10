@@ -17,6 +17,7 @@ import { RoutePageModule } from '../pages/route/route.module';
 
 import { BusAlarmPage } from '../pages/bus-alarm/bus-alarm';
 import { AlertTypePage } from '../pages/alert-type/alert-type';
+import { FavoritePage } from '../pages/favorite/favorite';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { AlertTypePage } from '../pages/alert-type/alert-type';
     MyApp,
     HomePage,
     BusAlarmPage,
-    AlertTypePage
+    AlertTypePage,
+    FavoritePage
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ import { AlertTypePage } from '../pages/alert-type/alert-type';
     MyApp,
     HomePage,
     RoutePage,
+    FavoritePage,
     BusAlarmPage,
     AlertTypePage
   ],

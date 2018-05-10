@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 
 import { BusAlarmPage } from '../pages/bus-alarm/bus-alarm';
 import { AlertTypePage } from '../pages/alert-type/alert-type';
+import { FavoritePage } from '../pages/favorite/favorite';
 
 
 @Component({
@@ -25,16 +26,20 @@ export class MyApp {
       splashScreen.hide();
     });
   }
-
+  goToFavorite(params){
+    if (!params) params = {};
+    this.navCtrl.push(FavoritePage);
+  }
+  
 
   goToBusAlarm(params){
     if (!params) params = {};
-    this.navCtrl.setRoot(BusAlarmPage);
+    this.navCtrl.push(BusAlarmPage);
   }
   
   goToAlertType(params){
     if (!params) params = {};
-    this.navCtrl.setRoot(AlertTypePage);
+    this.navCtrl.push(AlertTypePage);
   }
 }
 

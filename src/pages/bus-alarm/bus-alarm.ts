@@ -14,8 +14,8 @@ export class BusAlarmPage {
   }
 
   goback() {
-    // this.navCtrl.pop();
-    this.navCtrl.setRoot(MyApp);
+    this.navCtrl.pop();
+    // this.navCtrl.setRoot(MyApp);
 }
   
 }

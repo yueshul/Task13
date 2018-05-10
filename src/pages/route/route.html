@@ -22,29 +22,31 @@
           <ion-card-content>
             <ion-list>
               <ion-item>
-                <h2 style="font-size: 20px;"><strong>{{route.bus_options}}</strong></h2>
-                <h3>{{route.direction}}</h3>
-                <div><label>Departure:</label>{{route.dep}}</div>
-                <div><label>Arrival:</label>{{route.arr}}</div>
-                <div><label>Estimated Travel Time:</label>{{route.dur}}</div>
-                <div><label>Estimated Travel Distance:</label>{{route.dis}}</div>
-
+                <h2 class='busoptions'><strong>{{route.bus_options}}</strong></h2>
+                <h3 class='busoptions'>{{route.direction}}</h3>
+                <br/>
+                <div class="resultlabel"><label>Departure:</label>{{route.dep}}</div>
+                <div class="resultlabel"><label>Arrival:</label>{{route.arr}}</div>
+                <!-- <div><label>Est Time:</label>{{route.dur}}</div>
+                <div><label>Est Distance:</label>{{route.dis}}</div> -->
                 <button ion-button icon-left clear item-end (click)="routeSelected(route)"> 
                     <ion-icon name="navigate"></ion-icon>
-                    Start
-                  </button>
+                    GO
+                  </button>  
+              </ion-item>
+                
               
-                </ion-item>
             </ion-list>
 
             <ion-item>
-                <ion-label>Alert</ion-label>
+                <ion-label class = "alertoptions">Alert</ion-label>
                 <ion-select interface = "popover" [(ngModel)]='alertType'>
                   <ion-option value="SMS">SMS</ion-option>
                   <ion-option value="Email">Email</ion-option>
                   <ion-option value="App">InApp Only</ion-option>
                   
                 </ion-select>
+              
               </ion-item>
           </ion-card-content>
           

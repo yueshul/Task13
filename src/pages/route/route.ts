@@ -37,6 +37,8 @@ export class RoutePage {
       route['bus_options'] = this.generateDescription(route)['bus_options'];
       route['direction'] = this.generateDescription(route)['direction'];
       route['arr'] = this.generateDescription(route)['arr'];
+      // route['walkingsteps']= this.generateDescription(route)['walkingsteps'];
+      route['transitsteps']= this.generateDescription(route)['transitsteps'];
 
       // route['list'] = this.generateDescription(route);
       console.log('route text');
@@ -54,6 +56,10 @@ export class RoutePage {
     let arr : string = '';
     let dis : string = '';
     let dur : string = '';
+
+    let steps : string[] = [];
+    // let walkingsteps : string[] = [];
+    let transitsteps : string[] = [];
 
     let bus_options : string = '';
     let directions : string[] = [];
@@ -92,6 +98,26 @@ export class RoutePage {
     dis = leg['distance']['text'];
     dur = leg['duration']['text'];
 
+    steps = leg['steps'];
+
+    for (let k of steps) {
+       
+       temp = k['travel_mode']
+      //  textsteps.push(k['trave l_mode'] + ":"
+       if (temp =='WALKING') {
+          if (k['steps'][0].length > 1) {
+            for (let l of k['steps'][0]) {
+               transitsteps.push(l['html_instructions'])
+            }
+            
+          } else{
+            transitsteps.push(k['html_instructions'])
+          }
+       }
+       else {
+          transitsteps.push(k['html_instructions'])
+       }
+    }
 
 
     
@@ -101,7 +127,8 @@ export class RoutePage {
       dis:dis,
       dur :dur,
       direction,
-      bus_options:bus_options};
+      bus_options:bus_options,
+      transitsteps: transitsteps};
   }
 
   ionViewDidLoad() {
