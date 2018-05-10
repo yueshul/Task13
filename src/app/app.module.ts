@@ -18,8 +18,10 @@ import { RoutePageModule } from '../pages/route/route.module';
 import { BusAlarmPage } from '../pages/bus-alarm/bus-alarm';
 import { AlertTypePage } from '../pages/alert-type/alert-type';
 import { FavoritePage } from '../pages/favorite/favorite';
-import { ContentDrawerComponent } from '../components/content-drawer/content-drawer';
+
 import { DataProvider } from '../providers/data/data';
+import { TripInfoPage } from '../pages/trip-info/trip-info';
+import { TripInfoPageModule } from '../pages/trip-info/trip-info.module';
 
 
 @NgModule({
@@ -28,8 +30,7 @@ import { DataProvider } from '../providers/data/data';
     HomePage,
     BusAlarmPage,
     AlertTypePage,
-    FavoritePage,
-    ContentDrawerComponent
+    FavoritePage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +38,7 @@ import { DataProvider } from '../providers/data/data';
     IonicModule.forRoot(MyApp),
     SelectSearchableModule,
     RoutePageModule,
-    
+    TripInfoPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -46,7 +47,8 @@ import { DataProvider } from '../providers/data/data';
     RoutePage,
     FavoritePage,
     BusAlarmPage,
-    AlertTypePage
+    AlertTypePage,
+    TripInfoPage
   ],
   providers: [
     StatusBar,

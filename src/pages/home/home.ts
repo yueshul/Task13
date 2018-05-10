@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
-import { NavController, MenuController } from 'ionic-angular';
+import { NavController, MenuController, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { MapsProvider } from './../../providers/maps/maps';
+// import { MapsProvider } from './../../providers/maps/maps';
 import { SelectSearchable } from 'ionic-select-searchable';
 // import { GoogleMap } from '@ionic-native/google-maps';
 import { ActionSheetController } from 'ionic-angular';
@@ -12,6 +12,7 @@ import { RoutePage } from '../route/route';
 import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
+import { TripInfoPage } from '../trip-info/trip-info';
 
 declare var google;
 
@@ -49,37 +50,18 @@ export class HomePage {
   
   constructor(public navCtrl: NavController, 
               public geolocation: Geolocation, 
-              public mapsProvider: MapsProvider, 
               public httpClient : HttpClient,
               public actionSheetCtrl: ActionSheetController,
               public menuController: MenuController,
               public alertCtrl: AlertController,
-              public dataProvider : DataProvider) {
+              public dataProvider : DataProvider,
+              public modalCtrl: ModalController) {
       menuController.enable(true);
     
   }
 
   ionViewDidLoad() {
-    this.findUserLocation();
-
-    console.log(google.maps.geometry);
-  }
-
-  findUserLocation(){
-    let options = {
-      enableHighAccuracy: true,
-      timeout: 25000
-    };
-    this.geolocation.getCurrentPosition(options).then((position) => {
-      this.location = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      };
-      this.init(this.location, this.mapElement);
-      // this.mapsProvider.init(this.location, this.mapElement);
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+    this.init();
   }
 
   showResultsOrigin(event : any) {
@@ -366,7 +348,13 @@ export class HomePage {
         {
           text: 'Add to Bookmark',
           handler: () => {
-            console.log('bookmark clicked');
+            this.dataProvider.addFavorite(this.destincation_location['description']);
+            let alert = this.alertCtrl.create({
+              title: 'Success',
+              subTitle: this.destincation_location['description'] + ' Added to Favorites',
+              buttons: ['OK']
+            });
+            alert.present();
           }
         },{
           text: 'Get Directions',
@@ -396,28 +384,48 @@ export class HomePage {
   }
 }
 
-  init(location, element){
-    let latLng = new google.maps.LatLng(location.latitude, location.longitude);
+marker : any;
 
-    let opts = {
-      center: latLng,
+  init(){
+
+    //map opts
+    let map_opts = {
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    this.map = new google.maps.Map(element.nativeElement, opts);
+    this.map = new google.maps.Map(this.mapElement.nativeElement, map_opts);
 
-    console.log("to add marker");
-    let marker = new google.maps.Marker({
-      position: latLng,
-      map: this.map,
+    this.marker = new google.maps.Marker({
       icon : "http://maps.google.com/mapfiles/ms/micons/man.png"
     });
-    console.log("marker added");
+
+
+    let options = {
+      enableHighAccuracy: true,
+      timeout: 25000
+    };
+
+    this.geolocation.watchPosition(options).subscribe(position => {
+
+      this.location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+      let latLng = new google.maps.LatLng(this.location.latitude, this.location.longitude);
+
+      this.marker.setMap(this.map);
+      this.marker.setPosition(latLng);
+      this.map.setCenter(latLng);
+      console.log("marker added");
+
+    })
   }
 
 
   tripInfo(event : any ) {
-    
+    var data = this.selectedRoute;
+    var tripInfoPage = this.modalCtrl.create(TripInfoPage, data);
+    tripInfoPage.present();
   }
 
   locateBus(event : any ) {

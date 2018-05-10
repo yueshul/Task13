@@ -15,7 +15,7 @@ export class DataProvider {
   path : string = "./assets/files/stops.txt";
   map : Map<string, string> = new Map();
 
-  
+  favorites : string[]= []
 
   constructor(public http : HttpClient) {
     this.http.get(this.path, {responseType: 'text'}).subscribe(data => {
@@ -42,5 +42,14 @@ export class DataProvider {
 
     return this.map.get(stop);
   }
+
+  addFavorite(favorite : string) {
+    this.favorites.push(favorite);
+  }
+
+  getFavorites() : string[]{
+    return this.favorites;
+  }
+
 
 }

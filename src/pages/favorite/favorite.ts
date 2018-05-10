@@ -12,6 +12,7 @@ import { MenuController } from 'ionic-angular';
 // import { GoogleMap } from '@ionic-native/google-maps';
 import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { DataProvider } from '../../providers/data/data';
 
 @Component({
   templateUrl: 'favorite.html'
@@ -20,22 +21,19 @@ import { AlertController } from 'ionic-angular';
 })
 
 export class FavoritePage {
-  // @ViewChild(Nav) navCtrl: Nav;
-  // rootPage:any = HomePage;
 
-  // location: {
-  //   latitude: number,
-  //   longitude: number
-  // };
   option : string = 'address';
   search_result: string;
   showing : boolean = false;
   showing_result : boolean = false;
 
+  searchItem : any;
   selectedRoute : any;
   map: any;
   defaultItems : string[] = ['417 South Craig Street', 'Heinz College', 'Hilman & Gates Center'];
   items : any;
+
+  favorites : any;
 
   constructor(public navCtrl: NavController, 
     public geolocation: Geolocation, 
@@ -43,8 +41,8 @@ export class FavoritePage {
     public httpClient : HttpClient,
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
-    public menuController: MenuController) {
-menuController.enable(true);
+    public dataProvider : DataProvider) {
+
 }
 
 
@@ -94,7 +92,7 @@ cancel(event: any) {
 // search_result : any;
 // destincation_location : any;
 // const control =
-search_results : string[] = [];
+
 
 addtoFav(event : any, result : any) {
 
@@ -107,26 +105,15 @@ addtoFav(event : any, result : any) {
     buttons: ['OK']
   });
   alert.present();
-  this.search_results.push(event['description']);
+
+  this.dataProvider.addFavorite(event['description']);
+  this.favorites = this.dataProvider.favorites;
   this.search_result = "";
   this.showing_result = false;
-  
+  this.searchItem = "";
   console.log('search_results');
-  console.log(this.search_results);
+  
 }
 
-
-  // if (this.searchOrigin != null && this.searchOrigin == true) {
-  //   this.originPlace = result['description'];
-  //   this.origin_location = {
-  //     place_id : result['place_id']
-  //   }
-  // } else {
-  //   this.destinationPlace = result['description'];
-  //   this.destincation_location = result;
-  // }
-  // console.log(result);
-  // this.clearResult();
-  // this.selectPlace(result['place_id']);
 
 }
