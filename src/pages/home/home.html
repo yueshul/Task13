@@ -1,8 +1,11 @@
 <ion-header>
   
   <ion-toolbar color="white">
-      <ion-title>
+      <ion-title *ngIf="!onRoute">
           PAAC Transit
+      </ion-title>
+      <ion-title *ngIf="onRoute">
+          En Route
       </ion-title>
      
       <button ion-button menuToggle icon-only>
@@ -10,7 +13,7 @@
      </button>
      
     </ion-toolbar>
-     <ion-toolbar color="green">
+     <ion-toolbar color="green" *ngIf="!onRoute">
           <ion-segment [(ngModel)]="option">
           <ion-segment-button value="address">
             Address
@@ -23,20 +26,32 @@
           </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-
-
-  <ion-searchbar
-      [(ngModel)]="searchItem"
-      (ionInput)="showResults($event)"
-      (ionCancel)="cancel($event)"> 
-      
-      
+    
+    <ion-toolbar *ngIf="!onRoute">
+      <ion-searchbar
+      [(ngModel)]="originPlace"
+      (ionInput)="showResultsOrigin($event)"
+      (ionCancel)="cancel($event)"
+      placeholder="Your Current Location">
     </ion-searchbar>
     
   
+    <ion-searchbar
+      [(ngModel)]="destinationPlace"
+      (ionInput)="showResultsDestination($event)"
+      (ionCancel)="cancel($event)"
+      placeholder='Destination'>
+    </ion-searchbar>
+        
+      <ion-buttons end>
+            <button ion-button icon-only (click)='search($event)'>
+              <ion-icon name="bus"></ion-icon>
+            </button>
+          </ion-buttons>
+    </ion-toolbar>
 
 <ion-list *ngIf='showing'>
-    <ion-item *ngFor="let item of items" (touchstart)="selectResult(item)">
+    <ion-item *ngFor="let item of items" (touchstart)="selectResult($event, item)">
       {{ item.description }}
     </ion-item>
 </ion-list>
@@ -44,4 +59,13 @@
 
 <ion-content>
   <div #map id="map" padding></div>
+
+  <ion-fab left bottom *ngIf="onRoute">
+    <button ion-fab color="light"><ion-icon name="arrow-dropright"></ion-icon></button>
+    <ion-fab-list side="right">
+      <button ion-fab (click)="tripInfo($event)"><ion-icon name="information-circle"></ion-icon></button>
+      <button ion-fab (click)="locateBus($event)"><ion-icon name="locate"></ion-icon></button>
+      <button ion-fab (click)="exitTrip($event)"><ion-icon name="log-out"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

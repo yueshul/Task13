@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SelectSearchComponent } from './select-search/select-search';
+import { ContentDrawerComponent } from './content-drawer/content-drawer';
 @NgModule({
-	declarations: [SelectSearchComponent],
+	declarations: [SelectSearchComponent,
+    ContentDrawerComponent],
 	imports: [],
-	exports: [SelectSearchComponent]
+	exports: [SelectSearchComponent,
+    ContentDrawerComponent]
 })
 export class ComponentsModule {}

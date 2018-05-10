@@ -19,6 +19,8 @@ export class RoutePage {
   route_intro : string[];
   routes : any;
   callback : any;
+  alertType : any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     console.log('hehe');
     console.log(navParams);
@@ -30,6 +32,10 @@ export class RoutePage {
     
     for (let route of this.routes) {
       
+      if (this.generateDescription(route) == null) {
+        continue;
+      }
+
       route['dep'] = this.generateDescription(route)['dep'];
       route['arr'] = this.generateDescription(route)['arr'];
       route['dis'] = this.generateDescription(route)['dis'];
@@ -49,6 +55,11 @@ export class RoutePage {
 
   generateDescription(route : any) : {} {
     let leg : any = route['legs'][0];
+
+    if (leg['departure_time'] == null || leg['arrival_time'] == null) {
+      return null;
+    }
+
     let temp: any = route['legs'][0]['steps'];
 
     let s : string = '';
@@ -80,15 +91,6 @@ export class RoutePage {
       bus_options +=  j + "-> "
     }
     bus_options = bus_options.substring(0, bus_options.length - 3)
-  //   if (list.length > 1) {
-  //     bus_options = bus_options.substring(0, bus_options.length - 3)
-  //   } else {
-  //     bus_options = "Good evening";
-  // }
-    
-
-    // s = leg['departure_time']['text'] + '-' + leg['arrival_time']['text'] + 
-    // ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'] ;
 
     s = leg['departure_time']['text'] + '-' + leg['arrival_time']['text'] + 
     ' , ' + leg['distance']['text'] + ' , ' + leg['duration']['text'] ;
@@ -138,7 +140,7 @@ export class RoutePage {
 
   routeSelected(route : any) {
     console.log(route);
-    this.callback(route);
+    this.callback({route : route, alertType : this.alertType});
     this.goBackToHome();
   }
 

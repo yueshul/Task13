@@ -18,6 +18,8 @@ import { RoutePageModule } from '../pages/route/route.module';
 import { BusAlarmPage } from '../pages/bus-alarm/bus-alarm';
 import { AlertTypePage } from '../pages/alert-type/alert-type';
 import { FavoritePage } from '../pages/favorite/favorite';
+import { ContentDrawerComponent } from '../components/content-drawer/content-drawer';
+import { DataProvider } from '../providers/data/data';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { FavoritePage } from '../pages/favorite/favorite';
     HomePage,
     BusAlarmPage,
     AlertTypePage,
-    FavoritePage
+    FavoritePage,
+    ContentDrawerComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { FavoritePage } from '../pages/favorite/favorite';
     Geolocation,
     MapsProvider,
     JsMapsProvider,
-    NativeMapsProvider
+    NativeMapsProvider,
+    DataProvider
   ]
 })
 export class AppModule {}
