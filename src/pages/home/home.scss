@@ -16,9 +16,9 @@ page-home {
     }
 
     .searchbar-input-container{
-        .searchbar-input{
+        .searchbar-input {
           &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-            color: rgba(154, 183, 236, 0.685);
+            color: darkslateblue;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             font-weight: bold;
           }

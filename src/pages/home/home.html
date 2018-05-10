@@ -29,21 +29,22 @@
     </ion-toolbar>
   </div> 
     <ion-toolbar *ngIf="!onRoute">
-      <ion-searchbar class="cur-input"
+      <div cclass="cur-input">
+      <ion-searchbar 
       [(ngModel)]="originPlace"
       (ionInput)="showResultsOrigin($event)"
       (ionCancel)="cancel($event)"
       placeholder="Your Current Location">
     </ion-searchbar>
-    
-  
+  </div>
+  <div cclass="to-input">
     <ion-searchbar
       [(ngModel)]="destinationPlace"
       (ionInput)="showResultsDestination($event)"
       (ionCancel)="cancel($event)"
-      placeholder='Destination'>
+      placeholder='Add Your Destination'>
     </ion-searchbar>
-        
+  </div>   
       <ion-buttons end>
             <button ion-button icon-only (click)='search($event)'>
               <ion-icon name="bus"></ion-icon>
