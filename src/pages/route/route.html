@@ -18,6 +18,11 @@
       <!-- <ion-item > -->
         <!-- <ion-content padding> -->
         <ion-card *ngFor="let route of routes">
+            <!-- <ion-option [value]="route" *ngIf="!!route"> -->
+
+
+
+      
           <!-- <ion-icon name="route" item-start large></ion-icon> -->
           <ion-card-content>
             <ion-list>
@@ -29,10 +34,12 @@
                 <div class="resultlabel"><label>Arrival:</label>{{route.arr}}</div>
                 <!-- <div><label>Est Time:</label>{{route.dur}}</div>
                 <div><label>Est Distance:</label>{{route.dis}}</div> -->
-                <button ion-button icon-left clear item-end (click)="routeSelected(route)"> 
-                    <ion-icon name="navigate"></ion-icon>
+                
+                <button ion-button icon-left clear item-end (click)="routeSelected(route)" > 
+                    <ion-icon name="navigate" ></ion-icon>
                     GO
                   </button>  
+               
               </ion-item>
                 
               
@@ -49,16 +56,7 @@
               
               </ion-item>
           </ion-card-content>
-          
-          <!-- <h2>{{route.routenumber}}</h2>
-          <p>{{ route.text}}</p>
-         
-          
-
-           
-          
-       
-      </ion-list> -->
+        <!-- </ion-option> -->
     </ion-card> 
       </ion-content>        
       

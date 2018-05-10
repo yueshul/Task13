@@ -21,19 +21,44 @@
                         <p>Set up current home</p>
                         <button ion-button clear item-end>Edit</button>
                         </button>  
-                            <button ion-item (click)="goToFavorite()">
-                                <ion-icon name="add-circle" item-height="5px"><span style="font: 1em sans-serif; color:gray">Add New Bookmark</span></ion-icon>
+                            <button ion-item (click)="goToFavorite()" menuClose="">
+                                <ion-icon name="add-circle" item-height="5px">
+                                    <span style="font: 15px sans-serif; color:gray">Add New Bookmark</span></ion-icon>
                         </button>  
                     </ion-list>
 
                 
    
-            <h5>Saved Addresses</h5>
+            <h5>Legal</h5>
                 <ion-list>
                     <button ion-item >
-                        <ion-icon name="bookmark"></ion-icon>
-                    Apple Store ShadySide
+                            <ion-icon name="information-circle"></ion-icon>
+                    Data Attribution
                     </button>
+                    <button ion-item >
+                            <ion-icon name="folder-open"></ion-icon>
+                        Privacy Policy
+                        </button>
+                </ion-list> 
+
+                <h5>About Us</h5>
+                <ion-list>
+                    <button ion-item >
+                            <ion-icon name="heart"></ion-icon>
+                    Review on App Store
+                    </button>
+                    <button ion-item >
+                            <ion-icon name="bus"></ion-icon>
+                        Port Authority 
+                        </button>
+                        <button ion-item >
+                                <ion-icon name="help"></ion-icon>
+                            Help
+                            </button>
+                            <button ion-item >
+                                    <ion-icon name="mail"></ion-icon>
+                               Send Feedback
+                                </button>
                 </ion-list> 
            
             <!-- <ion-list *ngFor="let route of routes"> {{routes}}</ion-list>-->
@@ -41,11 +66,11 @@
                     Notifications
                   </h4>
                   <form id="menu-form2">
-                    <button id="menu-button2" ion-button color="white" block icon-left style="border-radius:4px 4px 4px 4px;" menuClose="" on-click="goToBusAlarm()">
+                    <button style="color: azure;" ion-button style="color:azure" icon-left  menuClose="" on-click="goToBusAlarm()">
                       <ion-icon name="alarm"></ion-icon>
                       Bus Alarm
                     </button>
-                    <button id="menu-button3" ion-button color="white" block icon-left style="border-radius:5px 5px 5px 5px;" menuClose="" on-click="goToAlertType()">
+                    <button id="menu-button3" ion-button   icon-left  menuClose="" on-click="goToAlertType()">
                       <ion-icon name="barcode"></ion-icon>
                       Alert Types
                     </button>

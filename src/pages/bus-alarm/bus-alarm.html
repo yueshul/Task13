@@ -41,7 +41,7 @@
 
           <ion-item id="busAlarm-select2">
             <ion-label>
-              7am - 8am
+              Select Time
             </ion-label>
             <ion-select interface = "popover"> 
                     <ion-option value="Downtown">6am</ion-option>
@@ -53,23 +53,40 @@
           </ion-item>
           <ion-item id="busAlarm-toggle4">
             <ion-label>
-              71A
+              52A
             </ion-label>
             <ion-toggle color="positive" checked="false"></ion-toggle>
           </ion-item>
-          <ion-item id="busAlarm-select3">
-            <ion-label>
-              South Craig - Fifth
-            </ion-label>
-            <ion-select name=""></ion-select>
-          </ion-item>
+          <ion-item id="busAlarm-select1"> 
+              <ion-label>
+                      Select Stop
+                    </ion-label>  
+          
+          
+              <ion-select interface = "popover"> 
+                      <ion-option value="Downtown">town Blvd of the Allies at Duquesne University Oa</ion-option>
+                      <ion-option value="Oakland">Oakland-CMU Forbes Ave past Morewood Ave</ion-option>
+                      <ion-option value="North">Robinson Town Ctr Park Manor Blvd at IKEA Cs</ion-option>
+                      <ion-option value="Shadyside">Oakland Forbes Ave at Atwood St</ion-option>
+                      <ion-option value="Liberty">Carnegie Bell Station Stop C</ion-option>
+                  </ion-select>  
+              </ion-item>
+
+
           <ion-item id="busAlarm-select4">
             <ion-label>
-              7am - 8am
+              Select Time
             </ion-label>
-            <ion-select name=""></ion-select>
+            <ion-select interface = "popover"> 
+                <ion-option value="Downtown">6am</ion-option>
+                <ion-option value="Oakland">7am</ion-option>
+                <ion-option value="North">9am</ion-option>
+                <ion-option value="Shadyside">4pm</ion-option>
+                <ion-option value="Liberty">5pm</ion-option>
+            </ion-select>  
           </ion-item>
         </form>
+        <br/>
         <button id="busAlarm-button1" ion-button color="positive" block>
           Add New
         </button>

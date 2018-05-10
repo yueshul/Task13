@@ -10,4 +10,32 @@ page-home {
     ion-app._gmaps_cdv_ .nav-decor{
         background-color: transparent !important;
     }
+    .toolbar-ios .segment-button {
+        font-size: 15px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .searchbar-input-container{
+        .searchbar-input{
+          &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: rgba(154, 183, 236, 0.685);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: bold;
+          }
+        //   &::-moz-placeholder { /* Firefox 19+ */
+        //     color: white;
+        //   }
+        //   &:-ms-input-placeholder { /* IE 10+ */
+        //     color: red;
+        //   }
+        //   &:-moz-placeholder { /* Firefox 18- */
+        //     color: white;
+        //   }
+        }
+        .searchbar-clear-icon{
+            // color: red;
+          filter: invert(1);
+        }
+    }
+
 }

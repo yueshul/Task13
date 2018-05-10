@@ -1,6 +1,6 @@
 <ion-header>
         <ion-toolbar>
-                <ion-title>Favorite</ion-title>
+                <ion-title>Bookmarks</ion-title>
                 <button ion-button color="light" (click)="goback()">
                         Back
                 </button>     
@@ -13,23 +13,102 @@
     [(ngModel)]="searchItem"
     (ionInput)="showResults($event)"
     (ionCancel)="cancel($event)"> 
-    
-    
   </ion-searchbar>
-  <ion-list *ngIf='showing'>
-      <ion-item *ngFor="let item of items" (touchstart)="selectResult(item)">
+  <ion-list *ngIf='showing_result'>
+      <ion-item *ngFor="let item of items" (touchstart)="addtoFav(item)">
         {{ item.description }}
       </ion-item>
   </ion-list>   
-
 </ion-item>
 
-<ion-item-divider color="light">Add New Bookmark</ion-item-divider>
-    
-<!-- <ion-list> -->
+
+<ion-item-divider color="light"> Bookmarks </ion-item-divider>
+   
+<ion-list>
+    <ion-item-sliding>
+      <ion-item>
+        <h3>
+       417 S. Craig Street, Pittsburgh, Penn, 15213
+      </h3>
+      </ion-item>
+       <ion-item-options side="right">
+          <button ion-button color="danger" >
+              <ion-icon name="trash"></ion-icon> Delete
+          </button>
+          <button ion-button color="primary" >
+              <ion-icon name="pin"></ion-icon> Go
+          </button>
+      </ion-item-options>
+  </ion-item-sliding>
+  <ion-item-sliding>
+      <ion-item>
+          <h3>
+        Pittsburgh International Airport
+      </h3>
+    </ion-item>
+        <ion-item-options side="right">
+            <button ion-button color="danger" >
+                <ion-icon name="trash"></ion-icon> Delete
+            </button>
+            <button ion-button color="primary" >
+                <ion-icon name="pin"></ion-icon> Go
+            </button>
+        </ion-item-options>
+        </ion-item-sliding>
+        <ion-item-sliding> <ion-item>
+            <h3>
+        David L. Lawrence Convention Center
+      </h3>
+    </ion-item>
+        <ion-item-options side="right">
+            <button ion-button color="danger" >
+                <ion-icon name="trash"></ion-icon> Delete
+            </button>
+            <button ion-button color="primary" >
+                <ion-icon name="pin"></ion-icon> Go
+            </button>
+        </ion-item-options>
+      </ion-item-sliding>
+        <ion-item-sliding><ion-item>
+            <h3>
+        East End Food Co-op, Meade Street, Pittsburgh
+      </h3>
+    </ion-item>
+        <ion-item-options side="right">
+            <button ion-button color="danger" >
+                <ion-icon name="trash"></ion-icon> Delete
+            </button>
+            <button ion-button color="primary" >
+                <ion-icon name="pin"></ion-icon> Go
+            </button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    <ion-item-sliding *ngFor="let r of search_results">
+        <ion-item>
+          <h3>
+            {{r}}
+          </h3>
+        </ion-item>
+
+        <ion-item-options side="right">
+            <button ion-button color="danger" >
+                <ion-icon name="trash"></ion-icon> Delete
+            </button>
+            <button ion-button color="primary" >
+                <ion-icon name="pin"></ion-icon> Go
+            </button>
+        </ion-item-options>
+    </ion-item-sliding>
+</ion-list>
+  </ion-item-group>
+  </ion-content>
+
+
+  <!-- <ion-list> -->
       
         
-          <ion-item>
+          <!-- <ion-item>
           <ion-label floating>Address Line 1</ion-label>
           <ion-input type="text" value=""></ion-input>
         </ion-item>
@@ -52,11 +131,5 @@
             <button ion-button style="color:black; background-color: lightgrey"> Add
               <!-- <button ion-button name="add-circle" icon-only> -->
                 <!-- <ion-icon name="add-circle" item-height="5px">Add</ion-icon> -->
-            </button>  
-      <!-- </ion-list> -->
-  
-
-  </ion-item-group>
-       
-
-  </ion-content>
+            <!-- </button>   -->
+      <!-- </ion-list> --> 

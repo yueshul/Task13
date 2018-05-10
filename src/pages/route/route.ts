@@ -33,23 +33,27 @@ export class RoutePage {
     for (let route of this.routes) {
       
       if (this.generateDescription(route) == null) {
+        route['dep'] = "Now";
+        route['arr'] = "5 Min";
+        route['bus_options'] = "Walking";
+        route['transitsteps']= [];
         continue;
       }
-
+      else {
       route['dep'] = this.generateDescription(route)['dep'];
       route['arr'] = this.generateDescription(route)['arr'];
       route['dis'] = this.generateDescription(route)['dis'];
       route['dur'] = this.generateDescription(route)['dur'];
       route['bus_options'] = this.generateDescription(route)['bus_options'];
       route['direction'] = this.generateDescription(route)['direction'];
-      route['arr'] = this.generateDescription(route)['arr'];
+      // route['arr'] = this.generateDescription(route)['arr'];
       // route['walkingsteps']= this.generateDescription(route)['walkingsteps'];
       route['transitsteps']= this.generateDescription(route)['transitsteps'];
 
       // route['list'] = this.generateDescription(route);
       console.log('route text');
       console.log(route);
-      
+    }
     }
   }
 

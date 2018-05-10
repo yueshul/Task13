@@ -11,6 +11,7 @@ import { SelectSearchable } from 'ionic-select-searchable';
 import { MenuController } from 'ionic-angular';
 // import { GoogleMap } from '@ionic-native/google-maps';
 import { ActionSheetController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'favorite.html'
@@ -27,8 +28,9 @@ export class FavoritePage {
   //   longitude: number
   // };
   option : string = 'address';
-  searchItem : string;
+  search_result: string;
   showing : boolean = false;
+  showing_result : boolean = false;
 
   selectedRoute : any;
   map: any;
@@ -40,6 +42,7 @@ export class FavoritePage {
     public mapsProvider: MapsProvider, 
     public httpClient : HttpClient,
     public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController,
     public menuController: MenuController) {
 menuController.enable(true);
 }
@@ -54,7 +57,7 @@ showResults(event : any) {
   console.log("favorite");
 
   let val : string = event.target.value;
-
+  this.showing_result = true;
   if (val && val.trim() != '') {
     this.queryAutocomplete(val);
   }
@@ -78,5 +81,52 @@ queryAutocomplete(query : string) {
   });
 }
 
+clearResult(){
+  this.items = [];
+  this.showing = false;
+}
+
+cancel(event: any) {
+  console.log("here: " + event.target.value);
+  this.items = [];
+}
+
+// search_result : any;
+// destincation_location : any;
+// const control =
+search_results : string[] = [];
+
+addtoFav(event : any, result : any) {
+
+  console.log(event);
+  console.log('the fav search result');
+  console.log(event['description']);
+  let alert = this.alertCtrl.create({
+    title: 'Success',
+    subTitle: event['description'] + ' Added to Favorites',
+    buttons: ['OK']
+  });
+  alert.present();
+  this.search_results.push(event['description']);
+  this.search_result = "";
+  this.showing_result = false;
   
+  console.log('search_results');
+  console.log(this.search_results);
+}
+
+
+  // if (this.searchOrigin != null && this.searchOrigin == true) {
+  //   this.originPlace = result['description'];
+  //   this.origin_location = {
+  //     place_id : result['place_id']
+  //   }
+  // } else {
+  //   this.destinationPlace = result['description'];
+  //   this.destincation_location = result;
+  // }
+  // console.log(result);
+  // this.clearResult();
+  // this.selectPlace(result['place_id']);
+
 }
