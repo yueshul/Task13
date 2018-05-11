@@ -37,7 +37,6 @@ export class FavoritePage {
 
   constructor(public navCtrl: NavController, 
     public geolocation: Geolocation, 
-    public mapsProvider: MapsProvider, 
     public httpClient : HttpClient,
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,

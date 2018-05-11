@@ -15,8 +15,13 @@ export class DataProvider {
   path : string = "./assets/files/stops.txt";
   map : Map<string, string> = new Map();
 
-  favorites : string[]= [];
-  homeaddress: string = "Home Address";
+  homeAddr : string;
+
+  homeSetUp : boolean = false;
+  workAddr : string;
+  workSetUp : boolean = false;
+
+  favorites : string[]= []
 
   constructor(public http : HttpClient) {
     this.http.get(this.path, {responseType: 'text'}).subscribe(data => {
@@ -52,9 +57,10 @@ export class DataProvider {
     return this.favorites;
   }
 
-  addHome(home : string) {
-    this.homeaddress = home;
-  }
 
+
+  getStreetAddr(fullAddr : string) {
+    return fullAddr.split(',')[0];
+  }
 
 }

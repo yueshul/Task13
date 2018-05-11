@@ -27,16 +27,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 <ion-content padding>
 
-<ion-card>
-  <ion-card-header>
+<ion-card *ngFor="let tripInfo of array">
+  <ion-card-header text-wrap="white-space: normal">
   <ion-icon name="information-circle"></ion-icon>
-   Trip
+   Trip ({{tripInfo.start_addr}} - {{tripInfo.end_addr}})
   </ion-card-header>
-  <ion-card-content>
-    <p>From: 417 South Craig Street</p>
-    <p>To: 5326 Pocusset Street</p>
-    <p>Arrive at depature stop at: 11:40 am</p>
-    <p>Estimated time at arrival stop: 11:56 am</p>
+  <ion-card-content ng-model="tripInfo">
+    
+    <p>Please departure at {{tripInfo.dep}} and you will arrive at {{tripInfo.arr}}</p>
+    <p>Bus will departure at {{tripInfo.dep_stop_time}} and arrive at {{tripInfo.arr_stop_time}}</p>
+    <p>Estimated Duration: {{tripInfo.dur}}</p>
+    <p>Distance: {{tripInfo.dis}}</p>
   </ion-card-content>
   </ion-card>
     <ion-card>
@@ -45,11 +46,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
          Bus Location
         </ion-card-header>
         <ion-card-content>
-          <p>Next stop: </p>
+          <p>Real time estimation arrival time at departure stop: {{tripInfo.dep_stop_time}}</p>
         </ion-card-content>
       </ion-card>
-
-
       <ion-card>
   <ion-card-header>
   <ion-icon name="locate"></ion-icon>
@@ -68,14 +67,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TripInfoPage {
 
+  array : any;
+
   tripInfo : any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tripInfo = navParams.data;
-
-
-    console.log("=====")
-    console.log(this.tripInfo)
+    this.array = new Array(this.tripInfo);
   }
+
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TripInfoPage');

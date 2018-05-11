@@ -1,9 +1,16 @@
 import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
-import { NavController, MenuController, ModalController } from 'ionic-angular';
+import { NavController, MenuController, ModalController, Platform } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 // import { MapsProvider } from './../../providers/maps/maps';
 import { SelectSearchable } from 'ionic-select-searchable';
-// import { GoogleMap } from '@ionic-native/google-maps';
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  LatLng,
+  MarkerOptions,
+  Marker
+ } from '@ionic-native/google-maps';
 import { ActionSheetController } from 'ionic-angular';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
@@ -13,6 +20,7 @@ import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { TripInfoPage } from '../trip-info/trip-info';
+
 
 declare var google;
 
@@ -55,14 +63,49 @@ export class HomePage {
               public menuController: MenuController,
               public alertCtrl: AlertController,
               public dataProvider : DataProvider,
-              public modalCtrl: ModalController) {
+              public modalCtrl: ModalController,
+              public googleMaps : GoogleMaps,
+              public plt: Platform) {
       menuController.enable(true);
     
   }
 
   ionViewDidLoad() {
     this.init();
+    // this.plt.ready().then(() => {
+      // this.initMap();
+    // });
   }
+
+  initMap() {
+
+    let map: GoogleMap = this.googleMaps.create(this.mapElement.nativeElement);
+    
+    map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
+
+      let coordinates: LatLng = new LatLng(33.6396965, -84.4304574);
+
+      let position = {
+        target: coordinates,
+        zoom: 17
+      };
+
+      map.animateCamera(position);
+
+      let markerOptions: MarkerOptions = {
+        position: coordinates,
+        icon: "assets/images/icons8-Marker-64.png",
+        title: 'Our first POI'
+      };
+
+      const marker = map.addMarker(markerOptions)
+        .then((marker: Marker) => {
+          marker.showInfoWindow();
+      });
+    })
+  }
+
+
 
   showResultsOrigin(event : any) {
 
@@ -265,6 +308,9 @@ export class HomePage {
       return;
     }
       
+      this.selectedRoute['dep_stop_id'] = d_stop_id;
+      this.selectedRoute['arr_stop_id'] = a_stop_id;
+
       let prediction_params = new HttpParams()
         .set('stpid', d_stop_id)
         .set('rt',rt)
@@ -401,42 +447,105 @@ marker : any;
 
   init(){
 
-    //map opts
-    let map_opts = {
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(this.mapElement.nativeElement, map_opts);
+    // let map_opts = {
+    //   camera: {
+    //     // latLng: latLng,
+    //     zoom: 11,
+    //     tilt: 30
+    //   }
+    // };
+    // this.map = this.googleMap.create(this.mapElement.nativeElement, map_opts)
 
-    this.marker = new google.maps.Marker({
-      icon : "http://maps.google.com/mapfiles/ms/micons/man.png"
+    // this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
+    //   console.log('Map is ready!');
+    // });
+
+    this.geolocation.getCurrentPosition().then((position) => {
+
+
+
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      console.log(latLng);
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+      this.marker = new google.maps.Marker({
+        icon : "http://maps.google.com/mapfiles/ms/micons/man.png",
+        position : latLng,
+        map : this.map
+      });
+  
+      let options = {
+        enableHighAccuracy: true,
+        timeout: 25000
+      };
+  
+      this.geolocation.watchPosition(options).subscribe(position => {
+  
+        this.location = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+        let latLng = new google.maps.LatLng(this.location.latitude, this.location.longitude);
+  
+        this.marker.setMap(this.map);
+        this.marker.setPosition(latLng);
+        this.map.setCenter(latLng);
+        console.log("marker added");
+  
+      })
+
+
+
+    }, (err) => {
+      console.log(err);
+      console.log('hehe')
     });
 
+    // let map_opts = {
+    //   zoom: 15,
+    //   mapTypeId: google.maps.MapTypeId.ROADMAP
+    // };
+    // this.map = new google.maps.Map(this.mapElement.nativeElement, map_opts);
 
-    let options = {
-      enableHighAccuracy: true,
-      timeout: 25000
-    };
+    
+  }
 
-    this.geolocation.watchPosition(options).subscribe(position => {
-
-      this.location = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      };
-      let latLng = new google.maps.LatLng(this.location.latitude, this.location.longitude);
-
-      this.marker.setMap(this.map);
-      this.marker.setPosition(latLng);
-      this.map.setCenter(latLng);
-      console.log("marker added");
-
-    })
+  locate() {
+    
+    this.map.setCenter(this.marker.getPosition());
+    console.log(1)
   }
 
 
   tripInfo(event : any ) {
     var data = this.selectedRoute;
+ 
+    // let prediction_params = new HttpParams()
+    //     .set('stpid', this.tripInfo['dep_stop_id'])
+    //     .set('vid', this.tripInfo['vid'])
+    //     .set('key', this.bus_api_key)
+    //     .set('format', 'json')
+    //     .set('rtpidatafeed', 'Port Authority Bus');
+
+    //     this.httpClient.get(this.prediction_api, {params : prediction_params}).subscribe( 
+    //       data => {
+    //       console.log(data['bustime-response']);
+    //       let vid = data['bustime-response']['prd'][0]['vid'];
+          
+    //       this.selectedRoute['vid'] = vid;
+    //       let vehicle_params = new HttpParams()
+    //       .set('key', this.bus_api_key)
+    //       .set('format', 'json')
+    //       .set('rtpidatafeed', 'Port Authority Bus')
+    //       .set('vid', vid);
+    //     });  
+
     var tripInfoPage = this.modalCtrl.create(TripInfoPage, data);
     tripInfoPage.present();
   }
@@ -447,7 +556,11 @@ marker : any;
 
   exitTrip(event : any ) {
     this.onRoute = false;
-    this.origin_marker.setMap(null);
+
+    if (this.origin_marker != null) {
+      this.origin_marker.setMap(null);
+    }
+    
     this.destination_marker.setMap(null);
     this.originPlace = null;
     this.origin_location = null;

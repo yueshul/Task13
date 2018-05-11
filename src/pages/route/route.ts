@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
+import { DataProvider } from '../../providers/data/data';
 
 /**
  * Generated clabus_options for the RoutePage page.
@@ -21,7 +22,8 @@ export class RoutePage {
   callback : any;
   alertType : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+   public dataProvider : DataProvider) {
     console.log('hehe');
     console.log(navParams);
     this.routes = navParams.get('routes');
@@ -32,7 +34,9 @@ export class RoutePage {
     
     for (let route of this.routes) {
       
-      if (this.generateDescription(route) == null) {
+      let des = this.generateDescription(route);
+
+      if (des == null) {
         route['dep'] = "Now";
         route['arr'] = "5 Min";
         route['bus_options'] = "Walking";
@@ -40,12 +44,18 @@ export class RoutePage {
         continue;
       }
       else {
-      route['dep'] = this.generateDescription(route)['dep'];
-      route['arr'] = this.generateDescription(route)['arr'];
-      route['dis'] = this.generateDescription(route)['dis'];
-      route['dur'] = this.generateDescription(route)['dur'];
-      route['bus_options'] = this.generateDescription(route)['bus_options'];
-      route['direction'] = this.generateDescription(route)['direction'];
+        route['dep_stop'] = des['dep_stop'];
+        route['arr_stop'] = des['arr_stop'];
+        route['dep_stop_time'] = des['dep_stop_time'];
+        route['arr_stop_time'] = des['arr_stop_time']; 
+        route['start_addr'] = des['start_addr'];
+        route['end_addr'] = des['end_addr'];
+      route['dep'] = des['dep'];
+      route['arr'] = des['arr'];
+      route['dis'] = des['dis'];
+      route['dur'] = des['dur'];
+      route['bus_options'] = des['bus_options'];
+      route['direction'] = des['direction'];
       // route['arr'] = this.generateDescription(route)['arr'];
       // route['walkingsteps']= this.generateDescription(route)['walkingsteps'];
       route['transitsteps']= this.generateDescription(route)['transitsteps'];
@@ -81,8 +91,25 @@ export class RoutePage {
     let direction : string = '';
     let list: string[] = []; 
 
+    let start_addr : string = this.dataProvider.getStreetAddr(leg['start_address']);
+    let end_addr : string = this.dataProvider.getStreetAddr(leg['end_address']);
+
+    let dep_stop : string;
+    let arr_stop : string;
+    let dep_stop_time : string;
+    let arr_stop_time : string;
+    
     for (let i of temp) {
         if (i['travel_mode'] == 'TRANSIT') {
+
+              if (dep_stop == null) {
+                dep_stop = i['transit_details']['departure_stop']['text']
+                dep_stop_time = i['transit_details']['departure_time']['text']
+              }
+
+              arr_stop = i['transit_details']['arrival_stop']['text']
+              arr_stop_time = i['transit_details']['arrival_time']['text']
+              
               directions.push(i['transit_details']['headsign'])
               list.push(i['transit_details']['line']['short_name'])
         }
@@ -128,6 +155,12 @@ export class RoutePage {
 
     
     return {
+      dep_stop : dep_stop,
+      arr_stop : arr_stop,
+      dep_stop_time : dep_stop_time,
+      arr_stop_time : arr_stop_time,
+      start_addr : start_addr,
+      end_addr : end_addr,
       dep : dep,
       arr : arr,
       dis:dis,

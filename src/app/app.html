@@ -11,17 +11,16 @@
                  <button ion-item >
                     <ion-icon name="home">
                         </ion-icon> Home
-                        <p>
-                            <!-- {{dataProvider.homeaddress}} -->
-                        </p>
-                        <button ion-button clear item-end (click) = "goToaddHome()" menuClose="">Edit</button>
-                        
+                        <p *ngIf="dataProvider.homeSetUp" > {{dataProvider.homeAddr}}</p>
+                        <p *ngIf="!dataProvider.homeSetUp" > Set up current home</p>
+                        <button ion-button clear item-end (click)="showHomePrompt()"  >Edit</button>
                         <!-- <button ion-button clear item-end>Edit</button> -->
                     </button>  
                 <button ion-item >
                         <ion-icon name="briefcase"></ion-icon> Work
-                        <p>Set up current home</p>
-                        <button ion-button clear item-end>Edit</button>
+                        <p *ngIf="dataProvider.workSetUp" > {{dataProvider.workAddr}}</p>
+                        <p *ngIf="!dataProvider.workSetUp" > Set up current work</p>
+                        <button ion-button clear item-end (click)="showWorkPrompt()">Edit</button>
                         </button>  
                             <button ion-item (click)="goToFavorite()" menuClose="">
                                 <ion-icon name="add-circle" item-height="5px">

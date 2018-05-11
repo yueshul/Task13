@@ -22,7 +22,7 @@ import { FavoritePage } from '../pages/favorite/favorite';
 import { DataProvider } from '../providers/data/data';
 import { TripInfoPage } from '../pages/trip-info/trip-info';
 import { TripInfoPageModule } from '../pages/trip-info/trip-info.module';
-import { AddHomePage } from '../pages/addHome/addhome';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 
 @NgModule({
@@ -32,7 +32,6 @@ import { AddHomePage } from '../pages/addHome/addhome';
     BusAlarmPage,
     AlertTypePage,
     FavoritePage,
-    AddHomePage
   ],
   imports: [
     BrowserModule,
@@ -51,17 +50,17 @@ import { AddHomePage } from '../pages/addHome/addhome';
     BusAlarmPage,
     AlertTypePage,
     TripInfoPage,
-    AddHomePage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
-    MapsProvider,
-    JsMapsProvider,
+    // MapsProvider,
+    // JsMapsProvider,
     NativeMapsProvider,
-    DataProvider
+    DataProvider,
+    GoogleMaps
   ]
 })
 export class AppModule {}
