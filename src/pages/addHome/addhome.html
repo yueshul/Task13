@@ -1,0 +1,46 @@
+<ion-header>
+        <ion-toolbar>
+                <ion-title>Add Home Address</ion-title>
+                <button ion-button color="light" (click)="goback()">
+                        Back
+                </button>     
+        </ion-toolbar>
+ </ion-header> 
+ <ion-content>
+    
+<ion-list> 
+      
+        
+    <ion-item>
+          <ion-label floating>Address Line 1</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="home"></ion-input>
+        </ion-item>
+      
+        <!-- <ion-item>
+          <ion-label floating>Address Line 2</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>City</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label floating>State</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item> -->
+      
+            <button ion-button style="color:black; background-color: lightgrey">
+              <!-- <button ion-button name="add-circle" icon-only> -->
+            <ion-icon name="add-circle" item-height="5px" item-end (click) = "addHome(home)">Add</ion-icon> 
+           </button>  
+      </ion-list>  
+
+
+
+
+  </ion-content>
+
+
+  

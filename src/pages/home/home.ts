@@ -272,9 +272,22 @@ export class HomePage {
         .set('format', 'json')
         .set('rtpidatafeed', 'Port Authority Bus');
 
-      this.httpClient.get(this.prediction_api, {params : prediction_params}).subscribe( data => {
-        console.log(data['bustime-response']);
-        let vid = data['bustime-response']['prd'][0]['vid'];
+      this.httpClient.get(this.prediction_api, {params : prediction_params,observe: 'response'}).subscribe( data => {
+        console.log('data')
+        console.log(data)
+        // console.log(data['bustime-response']);
+
+        if (data['body']['bustime-response']== null || data['body']['bustime-response']['prd']==null ) {
+          let alert = this.alertCtrl.create({
+            title: 'Error',
+            subTitle: 'No active track for '+ this.destincation_location['description'],
+            buttons: ['OK']
+          });
+          alert.present();
+          return;
+        }
+
+        let vid = data['body']['bustime-response']['prd'][0]['vid'];
 
         let vehicle_params = new HttpParams()
         .set('key', this.bus_api_key)

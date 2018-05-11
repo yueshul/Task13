@@ -11,8 +11,10 @@
                  <button ion-item >
                     <ion-icon name="home">
                         </ion-icon> Home
-                        <p>Set up current home</p>
-                        <button ion-button clear item-end>Edit</button>
+                        <p>
+                            <!-- {{dataProvider.homeaddress}} -->
+                        </p>
+                        <button ion-button clear item-end (click) = "goToaddHome()" menuClose="">Edit</button>
                         
                         <!-- <button ion-button clear item-end>Edit</button> -->
                     </button>  

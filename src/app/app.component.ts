@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { BusAlarmPage } from '../pages/bus-alarm/bus-alarm';
 import { AlertTypePage } from '../pages/alert-type/alert-type';
 import { FavoritePage } from '../pages/favorite/favorite';
-
+import { AddHomePage } from '../pages/addHome/addhome';
 
 @Component({
   templateUrl: 'app.html'
@@ -41,5 +41,11 @@ export class MyApp {
     if (!params) params = {};
     this.navCtrl.push(AlertTypePage);
   }
+
+  goToaddHome(params){
+    if (!params) params = {};
+    this.navCtrl.push(AddHomePage);
+  }
+
 }
 

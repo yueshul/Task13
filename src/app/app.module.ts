@@ -22,6 +22,7 @@ import { FavoritePage } from '../pages/favorite/favorite';
 import { DataProvider } from '../providers/data/data';
 import { TripInfoPage } from '../pages/trip-info/trip-info';
 import { TripInfoPageModule } from '../pages/trip-info/trip-info.module';
+import { AddHomePage } from '../pages/addHome/addhome';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TripInfoPageModule } from '../pages/trip-info/trip-info.module';
     HomePage,
     BusAlarmPage,
     AlertTypePage,
-    FavoritePage
+    FavoritePage,
+    AddHomePage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { TripInfoPageModule } from '../pages/trip-info/trip-info.module';
     FavoritePage,
     BusAlarmPage,
     AlertTypePage,
-    TripInfoPage
+    TripInfoPage,
+    AddHomePage,
   ],
   providers: [
     StatusBar,
